@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CookBlock.Views.MainPage.MenuPages.UpdateUserPage"
+             Title="Настройки профиля" Visual="Material">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Spacing="8" >
+                <Label Text="Измените данные в полях по вашему желанию" FontAttributes="Bold" TextColor="Black" FontSize="20" VerticalOptions="Center" Margin="10, 25, 10, 5" />
+                <Entry x:Name="UserName_Entry" Placeholder="Имя пользователя" Text="{Binding Path=User.Name}" FontSize="Medium" Margin="10, 5, 10, 0" Opacity="0.75" />
+                <Entry x:Name="OldPassword_Entry" Placeholder="Пароль" FontSize="Medium" Margin="10, 5, 10, 0" Opacity="0.75" IsPassword="True" />
+                <Entry x:Name="NewPassword_Entry" Placeholder="Пароль" FontSize="Medium" Margin="10, 5, 10, 0" Opacity="0.75" IsPassword="True" />
+                <Entry x:Name="NewPasswordConfirm_Entry" Placeholder="Подтвердите пароль" FontSize="Medium" Margin="10, 5, 10, 0" Opacity="0.75" IsPassword="True" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height = "*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*" />
+                        <ColumnDefinition Width="0.1*" />
+                        <ColumnDefinition Width="0.3*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Text="Отмена" Grid.Row="0" Grid.Column="0" Margin="10" Command="{Binding Path=ViewModel.BackCommand}" />
+                    <Button Text="Изменить" Grid.Row="0" Grid.Column="2" Margin="10" Clicked="Button_Clicked" />
+                </Grid>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

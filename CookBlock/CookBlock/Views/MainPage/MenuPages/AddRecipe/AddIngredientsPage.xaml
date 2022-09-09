@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CookBlock.Views.MainPage.MenuPages.AddIngredientsPage"
+             xmlns:local="clr-namespace:CookBlock.Tools;assembly=CookBlock"
+    Visual="Material" Title="Добавьте ингредиенты">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="0.5*" />
+                <RowDefinition Height="0.05*" />
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.2*" />
+                    </Grid.ColumnDefinitions>
+                    <Entry x:Name="nameEntry" Grid.Row="0" Grid.Column="0" Placeholder="Название ингредиента" />
+                    <Entry x:Name="countEntry" Grid.Row="0" Grid.Column="1" Placeholder="Кол-во" >
+                        <Entry.Behaviors>
+                            <local:NumericValidationBehavior />
+                        </Entry.Behaviors>
+                    </Entry>
+                </Grid>
+                <Button Text="Добавить" Clicked="addBtn_Click" HorizontalOptions="FillAndExpand" Margin="5"/>
+            </StackLayout>
+            <ScrollView Grid.Row="1">
+                <ListView x:Name="ingredientList" Header="Список ингредиентов" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10,0,0,0" FontSize="20">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Count}" />
+                                                    <Span Text="шт. × " />
+                                                    <Span Text="{Binding Name}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="Удалить" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Margin="0,0,10,0" FontSize="20" TextColor="Red">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnLabelTapped_Delete" CommandParameter="{Binding Name}"></TapGestureRecognizer>
+                                            </Label.GestureRecognizers>
+                                        </Label> 
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                </ScrollView>
+                <Button Text="Далее" Grid.Row="2" Clicked="Button_Clicked" Margin="5"></Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

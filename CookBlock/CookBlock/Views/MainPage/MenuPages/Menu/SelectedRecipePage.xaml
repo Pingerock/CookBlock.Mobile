@@ -1,0 +1,247 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CookBlock.Views.MainPage.MenuPages.SelectedRecipePage"
+             xmlns:fRating="clr-namespace:Rating;assembly=Rating"
+             Visual="Material">
+    <NavigationPage.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.6*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="0.1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+            </Grid.RowDefinitions>
+
+            <Label Text="{Binding Path=Recipe.Name}" Grid.Row="0" Grid.Column="0" TextColor="White" FontAttributes="Bold" FontSize="18"/>
+
+            <Image HorizontalOptions="End"
+                   VerticalOptions="Center"
+                    Aspect="AspectFill"
+                    Source="delete_white.png"
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="0,0,10,0"
+                    IsVisible="{Binding Path=ViewModel.IsMyRecipe}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                            Tapped="DeleteRecipeTapped"
+                            NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <!--<Grid Grid.Row="0" Grid.Column="2" IsVisible="{Binding Path=ViewModel.NotMyRecipe}">
+                <Image HorizontalOptions="End"
+                   VerticalOptions="Center"
+                    Aspect="AspectFill"
+                    Source="heart_white.png"
+                    Margin="0,0,10,0"
+                    IsVisible="{Binding Path=ViewModel.IsLiked}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="LikeRecipeTapped"
+                            NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                
+                <Image HorizontalOptions="End"
+                   VerticalOptions="Center"
+                    Aspect="AspectFill"
+                    Source="heart_outline_white.png"
+                    Margin="0,0,10,0"
+                    IsVisible="{Binding Path=ViewModel.NotLiked}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="LikeRecipeTapped"
+                            NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>-->
+
+            <Image HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    x:Name="reportImage"
+                    Grid.Row="0" 
+                    Grid.Column="1"
+                    Aspect="AspectFill"
+                    Source="flag.png"
+                    Margin="0,0,10,0"
+                    IsVisible="{Binding Path=ViewModel.NotMyRecipe}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                            Tapped="ReportRecipeTapped"
+                            NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    x:Name="likeImage"
+                    Grid.Row="0" 
+                    Grid.Column="2"
+                    Aspect="AspectFill"
+                    Source="heart_outline_white.png"
+                    Margin="0,0,10,0"
+                    IsVisible="{Binding Path=ViewModel.NotMyRecipe}">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                            Tapped="LikeRecipeTapped"
+                            NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image> 
+        </Grid>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <Grid>
+                    <Image x:Name="mainImage" IsVisible="{Binding Path=ViewModel.IsImageExist}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="400"/>
+                </Grid>
+                <Label Text="{Binding Path=Recipe.Name}" FontSize="20" VerticalOptions="Center" HorizontalOptions="Center" />
+                <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center"  FontSize="20" Margin="10,0,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Автор: " />
+                            <Span Text="{Binding Path=ViewModel.AuthorName}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center"  FontSize="20" Margin="10,10,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Дата создания: " />
+                            <Span x:Name="creationDate"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <StackLayout Orientation="Horizontal" Margin="10,0,0,0">
+                    <Label Text="Рейтинг: " FontSize="20" VerticalOptions="Center"/>
+                    <Image VerticalOptions="Center" Source="star.png" HeightRequest="30"/>
+                    <Label x:Name="rAverage" Text="{Binding Path=AverageRating}" FontSize="20" VerticalOptions="Center"/>
+                </StackLayout>
+                <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10,0,0,0" FontSize="20">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Всего оценок: " />
+                            <Span x:Name="rTotal" Text="{Binding Path=Ratings.Count}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Text="Список ингредиентов" FontSize="25" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10,0,0,0"/>
+                <Grid Margin="10,0,0,0">
+                    <ListView x:Name="ingredientList" ItemsSource="{Binding Path=ViewModel.Ingredients}" HasUnevenRows="True" IsVisible="{Binding Path=ViewModel.IsLoadedIngredients}" SeparatorVisibility="None" HeightRequest="140" SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10,0,0,0" FontSize="20">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text=" - " />
+                                                    <Span Text="{Binding Count}" />
+                                                    <Span Text="шт. × " />
+                                                    <Span Text="{Binding Name}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Label Text="Пусто. Похоже автор ничего не добавил. :(" FontSize="20" TextColor="DarkGray" IsVisible="{Binding Path=ViewModel.IsEmptyIngredients}"/>
+                </Grid>
+                <Label Text="Инструкция по приготовлению" FontSize="25" HorizontalOptions="StartAndExpand" VerticalOptions="Center" Margin="10,0,0,0"/>
+                <Grid Margin="10,0,0,0">
+                    <ListView x:Name="instructionList" ItemsSource="{Binding Path=ViewModel.Instructions}" HasUnevenRows="True" IsVisible="{Binding Path=ViewModel.IsLoadedInstructions}" SeparatorVisibility="None" SelectionMode="None" HeightRequest="350">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <StackLayout>
+                                            <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="23">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Position}" />
+                                                        <Span Text=" этап" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                            <Image Source="{Binding ImageSource}" VerticalOptions="Center" HorizontalOptions="Center" IsVisible="{Binding IsVisibleImage}"/>
+                                            <Label Text="{Binding Text}" FontSize="20" LineBreakMode="WordWrap" Margin="10,0,0,0" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                        </StackLayout>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Label Text="Пусто. Похоже автор ничего не добавил. :(" FontSize="20" TextColor="DarkGray" IsVisible="{Binding Path=ViewModel.IsEmptyInstructions}"/>
+                </Grid>
+                <Label Text="Поставьте оценку, чтобы пользователи смогли выбирать лучшие рецепты." FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"  Margin="10,0,0,0"/>
+                <fRating:RatingBar x:Name="ratingBar" ImageHeight="60" ImageWidth="60" HorizontalOptions="Center" FlowDirection="LeftToRight" EmptyStarImage="star_empty.png" FillStarImage="star.png"/>
+                <Button Text="Отправить" x:Name="ratingButton" Clicked="ratingButton_Clicked" HorizontalOptions="Fill" VerticalOptions="Center" Margin="10,10,10,10"/>
+                <Label HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="25" Margin="10,0,0,0">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Комментарии (" />
+                            <Span x:Name="commentCount" Text="{Binding Comments.Count}" />
+                            <Span Text=")" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.05*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.1*"/>
+                    </Grid.RowDefinitions>
+
+                    <Entry x:Name="commentText_Entry" Placeholder="Напишите комментарий..." Grid.Row="0" Grid.Column="0" FontSize="20" Margin="10,5,10,0" Opacity="0.75" VerticalOptions="Center"/>
+                    <Image HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Aspect="AspectFill"
+                        Source="send.png"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0,20,10,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                            Tapped="SendCommentTapped"
+                            NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+                <Grid Margin="10,0,0,0">
+                    <ListView x:Name="commentList" ItemsSource="{Binding Comments}" HasUnevenRows="True" IsVisible="{Binding Path=ViewModel.IsLoadedComments}" SeparatorVisibility="None" SelectionMode="None" HeightRequest="200">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <StackLayout>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="0.5*"/>
+                                                    <ColumnDefinition Width="0.5*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="0.1*"/>
+                                                </Grid.RowDefinitions>
+                                                <Label Text="{Binding Name}" Grid.Column="0" Grid.Row="0" FontSize="20" VerticalOptions="Center" HorizontalOptions="Start" Margin="10,10,0,0"/>
+                                                <Label Text="{Binding Date}" Grid.Column="1" Grid.Row="0" FontSize="15" VerticalOptions="Center" HorizontalOptions="End" TextColor="DarkGray" Margin="0,10,10,0"/>
+                                            </Grid>
+                                            <Label Text="{Binding Text}" FontSize="17" LineBreakMode="WordWrap"/>
+                                        </StackLayout>
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Label x:Name="commentsEmpty" Text="Здесь нет комментариев. Будьте первыми!" FontSize="20" TextColor="DarkGray" IsVisible="{Binding Path=ViewModel.IsEmptyComments}"/>
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

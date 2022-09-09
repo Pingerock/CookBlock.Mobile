@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CookBlock.Views.StartPage"
+             xmlns:local="clr-namespace:CookBlock"
+             Visual="Material"
+             BackgroundImageSource="StartPage_Background.jpg"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="300" />
+            <RowDefinition Height="250" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="Label_AppName" Grid.Row="0" Text="CookBlock" FontSize="80" TextColor="Black" FontFamily="Lobster-Regular.ttf" HorizontalOptions="Center" VerticalOptions="Center" Opacity="0" />
+        <!--<Image x:Name="image" Source="Logo.png" Grid.Row="0" VerticalOptions="Start" HorizontalOptions="Center"/>
+        <Label Text="hahaha cockers" FontSize="30" FontFamily="Sans" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Center"/>-->
+
+        
+        <StackLayout Spacing="8" Grid.Row="1">
+            <Entry x:Name="Login_Entry" Placeholder="Имя пользователя" FontSize="Medium" Margin="10, 5, 10, 0" Opacity="0.75" />
+            <Entry x:Name="Password_Entry" Placeholder="Пароль" IsPassword="True" FontSize="Medium" Margin="10, 5, 10, 0" Opacity="0.75" />
+            <Button Text="Войти" Margin="10" Clicked="Button_Clicked" />
+        </StackLayout>
+        <StackLayout Grid.Row="2" VerticalOptions="End">
+            <StackLayout Orientation="Horizontal" Margin="5,0,5,-10">
+                <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="Center" Color="Black" HeightRequest="1" />
+                <Label Text="Нет учётной записи?" HorizontalOptions="Center" VerticalOptions="Center" FontSize="16" TextColor="Black" FontAttributes="Bold" />
+                <BoxView HorizontalOptions="FillAndExpand" VerticalOptions="Center" Color="Black" HeightRequest="1" />
+            </StackLayout>
+            <Button Text="Зарегистрироваться" Margin="10" Command="{Binding CreateUserCommand}" HorizontalOptions="Fill" />
+        </StackLayout>
+    </Grid>
+
+</ContentPage>

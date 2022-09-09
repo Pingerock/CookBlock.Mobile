@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CookBlock.Views.MainPage.MainPageFlyout"
+             Title="Меню">
+    <StackLayout>
+        <ListView x:Name="MenuItemsListView"
+        SeparatorVisibility="None"
+        HasUnevenRows="true"
+        ItemsSource="{Binding MenuItems}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                            <Image Source="{Binding IconSource}" />
+                            <Label VerticalOptions="FillAndExpand"  VerticalTextAlignment="Center" Text="{Binding Title}" FontSize="20"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CookBlock.Views.MainPage.MenuPages.MyRecipePage"
+             Visual="Material" Title="Мои рецепты">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <SearchBar x:Name="searchBar" Placeholder="Поиск..." TextChanged="SearchBar_TextChanged" Grid.Row="0" />
+            <ScrollView Grid.Row="1">
+                <ListView x:Name="RecipeList" ItemsSource="{Binding Recipes}"
+              SelectedItem="{Binding SelectedRecipe, Mode=TwoWay}" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Label Text="{Binding Name}" FontSize="20" Margin="15, 10, 15, 10" VerticalOptions="Center"/>
+                                    </StackLayout>
+                                </ViewCell.View>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
