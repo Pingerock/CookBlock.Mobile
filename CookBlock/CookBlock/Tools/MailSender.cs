@@ -9,8 +9,9 @@ namespace CookBlock.Tools
 {
     public class MailSender
     {
-        private static string mailAdress = "kiselev.igor.student@mail.ru";
-        private static string mailPassword = "VfM8L2zXjriZB9v8FZHh";
+        //use your email and password for third-party apps
+        private static string mailAdress = "";
+        private static string mailPassword = "";
         private static string smtpLink = "smtp.mail.ru";
         private static int smtpPort = 2525;
 
